@@ -1,0 +1,21 @@
+{
+    "name": "caijq4ever/yii2-urlalias",
+    "description": "like opencart seo url",
+    "type": "yii2-extension",
+    "keywords": ["yii2","extension","url alias","seo"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Junqi Cai",
+            "email": "caijq4ever@163.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "junqi\\urlalias\\": ""
+        }
+    }
+}
