@@ -26,7 +26,7 @@ class UrlRule extends BaseUrlRule
         $pathInfo = $request->getPathInfo();
         $urlAlias = UrlAlias::getRouteByAlias($pathInfo);
 
-        return is_object($urlAlias) ? [$urlAlias->attributes['route'], $request->get()] : false;
+        return is_object($urlAlias) ? [$urlAlias->attributes['route'], unserialize($urlAlias->attributes['params']] : false;
     }
 
     /**
