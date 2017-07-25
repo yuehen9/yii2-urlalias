@@ -10,10 +10,11 @@ use junqi\urlalias\models\UrlAlias;
  */
 class UrlRule extends BaseUrlRule
 {
-    /**
-     * @inheritdoc
-     */
-    public function init() {}
+    /** @var string $pattern */
+    public $pattern = '';
+
+    /** @var string $route */
+    public $route = '';
 
     /**
      * @inheritdoc
@@ -25,8 +26,11 @@ class UrlRule extends BaseUrlRule
     {
         $pathInfo = $request->getPathInfo();
         $urlAlias = UrlAlias::getRouteByAlias($pathInfo);
+        if (is_object($urlAlias)) {
+            return [$urlAlias->attributes['route'], unserialize($urlAlias->attributes['params'])];
+        }
 
-        return is_object($urlAlias) ? [$urlAlias->attributes['route'], unserialize($urlAlias->attributes['params'])] : false;
+        return parent::parseRequest($manager, $request);
     }
 
     /**
@@ -38,8 +42,11 @@ class UrlRule extends BaseUrlRule
      */
     public function createUrl($manager, $route, $params)
     {
-        $urlAlias= UrlAlias::getAliasByRouteWithParams($route, $params);
+        $urlAlias = UrlAlias::getAliasByRouteWithParams($route, $params);
+        if (is_object($urlAlias)) {
+            return $urlAlias->attributes['alias'];
+        }
 
-        return is_object($urlAlias) ? $urlAlias->attributes['alias'] : false;
+        return parent::createUrl($manager, $route, $params);
     }
 }
